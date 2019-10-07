@@ -1,4 +1,4 @@
-## Mixell Creation ERC721 contract
+## Mixell Creations ERC721 contract
 
 ### About Mixell Creations
 
