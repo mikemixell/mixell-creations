@@ -4,11 +4,11 @@ import "./TradeableERC721Token.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /**
- * @title Creature
- * Creature - a contract for my non-fungible creatures.
+ * @title Creation
+ * Creation - a contract for my non-fungible creatures.
  */
-contract Creature is TradeableERC721Token {
-  constructor(address _proxyRegistryAddress) TradeableERC721Token("Creature", "OSC", _proxyRegistryAddress) public {  }
+contract Creation is TradeableERC721Token {
+  constructor(address _proxyRegistryAddress) TradeableERC721Token("Creation", "OSC", _proxyRegistryAddress) public {  }
 
   function baseTokenURI() public view returns (string memory) {
     return "http://api.mixell.de/";
