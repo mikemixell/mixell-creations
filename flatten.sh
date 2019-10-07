@@ -1,3 +1,3 @@
-./node_modules/.bin/truffle-flattener contracts/Creature.sol > flattened/Creature.sol
-./node_modules/.bin/truffle-flattener contracts/CreatureFactory.sol > flattened/CreatureFactory.sol
-./node_modules/.bin/truffle-flattener contracts/CreatureLootBox.sol > flattened/CreatureLootBox.sol
+./node_modules/.bin/truffle-flattener contracts/Creation.sol > flattened/Creation.sol
+./node_modules/.bin/truffle-flattener contracts/CreationFactory.sol > flattened/CreationFactory.sol
+./node_modules/.bin/truffle-flattener contracts/CreationLootBox.sol > flattened/CreationLootBox.sol

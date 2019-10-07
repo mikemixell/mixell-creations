@@ -2,44 +2,44 @@ pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Factory.sol";
-import "./Creature.sol";
-import "./CreatureLootBox.sol";
+import "./Creation.sol";
+import "./CreationLootBox.sol";
 import "./Strings.sol";
 
-contract CreatureFactory is Factory, Ownable {
+contract CreationFactory is Factory, Ownable {
   using Strings for string;
 
   address public proxyRegistryAddress;
   address public nftAddress;
   address public lootBoxNftAddress;
-  string public baseURI = "https://opensea-creatures-api.herokuapp.com/api/factory/";
+  string public baseURI = "https://opensea-Creations-api.herokuapp.com/api/factory/";
 
   /**
-   * Enforce the existence of only 100 OpenSea creatures.
+   * Enforce the existence of only 100 Creations.
    */
-  uint256 CREATURE_SUPPLY = 100;
+  // uint256 Creation_SUPPLY = 100;
 
   /**
-   * Three different options for minting Creatures (basic, premium, and gold).
+   * Three different options for minting Creations (basic, premium, and gold).
    */
   uint256 NUM_OPTIONS = 3;
-  uint256 SINGLE_CREATURE_OPTION = 0;
-  uint256 MULTIPLE_CREATURE_OPTION = 1;
+  uint256 SINGLE_Creation_OPTION = 0;
+  uint256 MULTIPLE_Creation_OPTION = 1;
   uint256 LOOTBOX_OPTION = 2;
-  uint256 NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION = 4;
+  uint256 NUM_CreationS_IN_MULTIPLE_Creation_OPTION = 4;
 
   constructor(address _proxyRegistryAddress, address _nftAddress) public {
     proxyRegistryAddress = _proxyRegistryAddress;
     nftAddress = _nftAddress;
-    lootBoxNftAddress = address(new CreatureLootBox(_proxyRegistryAddress, address(this)));
+    lootBoxNftAddress = address(new CreationLootBox(_proxyRegistryAddress, address(this)));
   }
 
   function name() external view returns (string memory) {
-    return "OpenSeaCreature Item Sale";
+    return "Creation Sale";
   }
 
   function symbol() external view returns (string memory) {
-    return "CPF";
+    return "MXL";
   }
 
   function supportsFactoryInterface() public view returns (bool) {
@@ -56,16 +56,16 @@ contract CreatureFactory is Factory, Ownable {
     assert(address(proxyRegistry.proxies(owner())) == msg.sender || owner() == msg.sender || msg.sender == lootBoxNftAddress);
     require(canMint(_optionId));
 
-    Creature openSeaCreature = Creature(nftAddress);
-    if (_optionId == SINGLE_CREATURE_OPTION) {
-      openSeaCreature.mintTo(_toAddress);
-    } else if (_optionId == MULTIPLE_CREATURE_OPTION) {
-      for (uint256 i = 0; i < NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION; i++) {
-        openSeaCreature.mintTo(_toAddress);
+    Creation mixellArtworkCreation = Creation(nftAddress);
+    if (_optionId == SINGLE_Creation_OPTION) {
+      mixellArtworkCreation.mintTo(_toAddress);
+    } else if (_optionId == MULTIPLE_Creation_OPTION) {
+      for (uint256 i = 0; i < NUM_CreationS_IN_MULTIPLE_Creation_OPTION; i++) {
+        mixellArtworkCreation.mintTo(_toAddress);
       }
     } else if (_optionId == LOOTBOX_OPTION) {
-      CreatureLootBox openSeaCreatureLootBox = CreatureLootBox(lootBoxNftAddress);
-      openSeaCreatureLootBox.mintTo(_toAddress);
+      CreationLootBox mixellArtworkCreationLootBox = CreationLootBox(lootBoxNftAddress);
+      mixellArtworkCreationLootBox.mintTo(_toAddress);
     } 
   }
 
@@ -74,19 +74,19 @@ contract CreatureFactory is Factory, Ownable {
       return false;
     }
 
-    Creature openSeaCreature = Creature(nftAddress);
-    uint256 creatureSupply = openSeaCreature.totalSupply();
+    Creation mixellArtworkCreation = Creation(nftAddress);
+    uint256 CreationSupply = mixellArtworkCreation.totalSupply();
 
     uint256 numItemsAllocated = 0;
-    if (_optionId == SINGLE_CREATURE_OPTION) {
+    if (_optionId == SINGLE_Creation_OPTION) {
       numItemsAllocated = 1;
-    } else if (_optionId == MULTIPLE_CREATURE_OPTION) {
-      numItemsAllocated = NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION;
+    } else if (_optionId == MULTIPLE_Creation_OPTION) {
+      numItemsAllocated = NUM_CreationS_IN_MULTIPLE_Creation_OPTION;
     } else if (_optionId == LOOTBOX_OPTION) {
-      CreatureLootBox openSeaCreatureLootBox = CreatureLootBox(lootBoxNftAddress);
-      numItemsAllocated = openSeaCreatureLootBox.itemsPerLootbox();
+      CreationLootBox mixellArtworkCreationLootBox = CreationLootBox(lootBoxNftAddress);
+      numItemsAllocated = mixellArtworkCreationLootBox.itemsPerLootbox();
     }
-    return creatureSupply < (CREATURE_SUPPLY - numItemsAllocated);
+    return CreationSupply < (Creation_SUPPLY - numItemsAllocated);
   }
   
   function tokenURI(uint256 _optionId) external view returns (string memory) {
