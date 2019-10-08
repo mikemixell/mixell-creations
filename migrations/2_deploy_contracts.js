@@ -1,6 +1,5 @@
 const Creation = artifacts.require("./Creation.sol");
 const CreationFactory = artifacts.require("./CreationFactory.sol")
-const CreationLootBox = artifacts.require("./CreationLootBox.sol");
 
 module.exports = function(deployer, network) {
   // OpenSea proxy registry addresses for rinkeby and mainnet.

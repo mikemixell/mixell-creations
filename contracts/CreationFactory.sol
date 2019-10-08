@@ -45,7 +45,7 @@ contract CreationFactory is Factory, Ownable {
     // Must be sent from the owner proxy or owner.
     ProxyRegistry proxyRegistry = ProxyRegistry(proxyRegistryAddress);
     assert(address(proxyRegistry.proxies(owner())) == msg.sender || owner() == msg.sender);
-    //require(canMint(_optionId));
+    require(canMint(_optionId));
 
     Creation mixellArtworkCreation = Creation(nftAddress);
     if (_optionId == SINGLE_CREATION_OPTION) {
@@ -56,7 +56,7 @@ contract CreationFactory is Factory, Ownable {
       }
     } 
   }
-/**
+
   function canMint(uint256 _optionId) public view returns (bool) {
     if (_optionId >= NUM_OPTIONS) {
       return false;
@@ -64,7 +64,7 @@ contract CreationFactory is Factory, Ownable {
 
     Creation mixellArtworkCreation = Creation(nftAddress);
     uint256 CreationSupply = mixellArtworkCreation.totalSupply();
-
+/**
     uint256 numItemsAllocated = 0;
     if (_optionId == SINGLE_CREATION_OPTION) {
       numItemsAllocated = 1;
@@ -72,8 +72,10 @@ contract CreationFactory is Factory, Ownable {
       numItemsAllocated = NUM_CREATIONS_IN_MULTIPLE_CREATION_OPTION;
     } 
     return CreationSupply < (Creation_SUPPLY - numItemsAllocated);
+     */
+     return true;
   }
-*/ 
+
 
   function tokenURI(uint256 _optionId) external view returns (string memory) {
     return Strings.strConcat(
