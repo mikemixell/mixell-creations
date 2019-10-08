@@ -3,7 +3,6 @@ pragma solidity ^0.5.0;
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Factory.sol";
 import "./Creation.sol";
-import "./CreationLootBox.sol";
 import "./Strings.sol";
 
 contract CreationFactory is Factory, Ownable {
