@@ -22,15 +22,13 @@ contract CreationFactory is Factory, Ownable {
    * Three different options for minting Creations (basic, premium, and gold).
    */
   uint256 NUM_OPTIONS = 3;
-  uint256 SINGLE_Creation_OPTION = 0;
-  uint256 MULTIPLE_Creation_OPTION = 1;
-  uint256 LOOTBOX_OPTION = 2;
-  uint256 NUM_CreationS_IN_MULTIPLE_Creation_OPTION = 4;
+  uint256 SINGLE_CREATION_OPTION = 0;
+  uint256 MULTIPLE_CREATION_OPTION = 1;
+  uint256 NUM_CREATIONS_IN_MULTIPLE_CREATION_OPTION = 4;
 
   constructor(address _proxyRegistryAddress, address _nftAddress) public {
     proxyRegistryAddress = _proxyRegistryAddress;
     nftAddress = _nftAddress;
-    lootBoxNftAddress = address(new CreationLootBox(_proxyRegistryAddress, address(this)));
   }
 
   function name() external view returns (string memory) {
@@ -56,15 +54,12 @@ contract CreationFactory is Factory, Ownable {
     require(canMint(_optionId));
 
     Creation mixellArtworkCreation = Creation(nftAddress);
-    if (_optionId == SINGLE_Creation_OPTION) {
+    if (_optionId == SINGLE_CREATION_OPTION) {
       mixellArtworkCreation.mintTo(_toAddress);
-    } else if (_optionId == MULTIPLE_Creation_OPTION) {
-      for (uint256 i = 0; i < NUM_CreationS_IN_MULTIPLE_Creation_OPTION; i++) {
+    } else if (_optionId == MULTIPLE_CREATION_OPTION) {
+      for (uint256 i = 0; i < NUM_CREATIONS_IN_MULTIPLE_CREATION_OPTION; i++) {
         mixellArtworkCreation.mintTo(_toAddress);
       }
-    } else if (_optionId == LOOTBOX_OPTION) {
-      CreationLootBox mixellArtworkCreationLootBox = CreationLootBox(lootBoxNftAddress);
-      mixellArtworkCreationLootBox.mintTo(_toAddress);
     } 
   }
 
@@ -77,14 +72,11 @@ contract CreationFactory is Factory, Ownable {
     uint256 CreationSupply = mixellArtworkCreation.totalSupply();
 
     uint256 numItemsAllocated = 0;
-    if (_optionId == SINGLE_Creation_OPTION) {
+    if (_optionId == SINGLE_CREATION_OPTION) {
       numItemsAllocated = 1;
-    } else if (_optionId == MULTIPLE_Creation_OPTION) {
-      numItemsAllocated = NUM_CreationS_IN_MULTIPLE_Creation_OPTION;
-    } else if (_optionId == LOOTBOX_OPTION) {
-      CreationLootBox mixellArtworkCreationLootBox = CreationLootBox(lootBoxNftAddress);
-      numItemsAllocated = mixellArtworkCreationLootBox.itemsPerLootbox();
-    }
+    } else if (_optionId == MULTIPLE_CREATION_OPTION) {
+      numItemsAllocated = NUM_CREATIONS_IN_MULTIPLE_CREATION_OPTION;
+    } 
     return CreationSupply < (Creation_SUPPLY - numItemsAllocated);
   }
   
