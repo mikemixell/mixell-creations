@@ -10,13 +10,7 @@ contract CreationFactory is Factory, Ownable {
 
   address public proxyRegistryAddress;
   address public nftAddress;
-  address public lootBoxNftAddress;
-  string public baseURI = "https://opensea-Creations-api.herokuapp.com/api/factory/";
-
-  /**
-   * Enforce the existence of only 100 Creations.
-   */
-  // uint256 Creation_SUPPLY = 100;
+  string public baseURI = "https://api.mixell.de/";
 
   /**
    * Three different options for minting Creations (basic, premium, and gold).
@@ -32,7 +26,7 @@ contract CreationFactory is Factory, Ownable {
   }
 
   function name() external view returns (string memory) {
-    return "Creation Sale";
+    return "Mixell Creation";
   }
 
   function symbol() external view returns (string memory) {
@@ -50,8 +44,8 @@ contract CreationFactory is Factory, Ownable {
   function mint(uint256 _optionId, address _toAddress) public {
     // Must be sent from the owner proxy or owner.
     ProxyRegistry proxyRegistry = ProxyRegistry(proxyRegistryAddress);
-    assert(address(proxyRegistry.proxies(owner())) == msg.sender || owner() == msg.sender || msg.sender == lootBoxNftAddress);
-    require(canMint(_optionId));
+    assert(address(proxyRegistry.proxies(owner())) == msg.sender || owner() == msg.sender);
+    //require(canMint(_optionId));
 
     Creation mixellArtworkCreation = Creation(nftAddress);
     if (_optionId == SINGLE_CREATION_OPTION) {
@@ -62,7 +56,7 @@ contract CreationFactory is Factory, Ownable {
       }
     } 
   }
-
+/**
   function canMint(uint256 _optionId) public view returns (bool) {
     if (_optionId >= NUM_OPTIONS) {
       return false;
@@ -79,7 +73,8 @@ contract CreationFactory is Factory, Ownable {
     } 
     return CreationSupply < (Creation_SUPPLY - numItemsAllocated);
   }
-  
+*/ 
+
   function tokenURI(uint256 _optionId) external view returns (string memory) {
     return Strings.strConcat(
         baseURI,
