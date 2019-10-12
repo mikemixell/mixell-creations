@@ -2,10 +2,10 @@ pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Factory.sol";
-import "./Creation.sol";
+import "./Mixell.sol";
 import "./Strings.sol";
 
-contract CreationFactory is Factory, Ownable {
+contract MixellFactory is Factory, Ownable {
   using Strings for string;
 
   address public proxyRegistryAddress;
@@ -13,12 +13,12 @@ contract CreationFactory is Factory, Ownable {
   string public baseURI = "https://api.mixell.de/";
 
   /**
-   * Three different options for minting Creations (basic, premium, and gold).
+   * Three different options for minting Mixells (basic, premium, and gold).
    */
   uint256 NUM_OPTIONS = 3;
-  uint256 SINGLE_CREATION_OPTION = 0;
-  uint256 MULTIPLE_CREATION_OPTION = 1;
-  uint256 NUM_CREATIONS_IN_MULTIPLE_CREATION_OPTION = 4;
+  uint256 SINGLE_MIXELL_OPTION = 0;
+  uint256 MULTIPLE_MIXELL_OPTION = 1;
+  uint256 NUM_MIXELLS_IN_MULTIPLE_MIXELL_OPTION = 4;
 
   constructor(address _proxyRegistryAddress, address _nftAddress) public {
     proxyRegistryAddress = _proxyRegistryAddress;
@@ -26,7 +26,7 @@ contract CreationFactory is Factory, Ownable {
   }
 
   function name() external view returns (string memory) {
-    return "Mixell Creation";
+    return "Mixell Mixell";
   }
 
   function symbol() external view returns (string memory) {
@@ -47,12 +47,12 @@ contract CreationFactory is Factory, Ownable {
     assert(address(proxyRegistry.proxies(owner())) == msg.sender || owner() == msg.sender);
     require(canMint(_optionId));
 
-    Creation mixellArtworkCreation = Creation(nftAddress);
-    if (_optionId == SINGLE_CREATION_OPTION) {
-      mixellArtworkCreation.mintTo(_toAddress);
-    } else if (_optionId == MULTIPLE_CREATION_OPTION) {
-      for (uint256 i = 0; i < NUM_CREATIONS_IN_MULTIPLE_CREATION_OPTION; i++) {
-        mixellArtworkCreation.mintTo(_toAddress);
+    Mixell mixellArtworkMixell = Mixell(nftAddress);
+    if (_optionId == SINGLE_MIXELL_OPTION) {
+      mixellArtworkMixell.mintTo(_toAddress);
+    } else if (_optionId == MULTIPLE_MIXELL_OPTION) {
+      for (uint256 i = 0; i < NUM_MIXELLS_IN_MULTIPLE_MIXELL_OPTION; i++) {
+        mixellArtworkMixell.mintTo(_toAddress);
       }
     } 
   }
@@ -62,16 +62,16 @@ contract CreationFactory is Factory, Ownable {
       return false;
     }
 
-    Creation mixellArtworkCreation = Creation(nftAddress);
-    uint256 CreationSupply = mixellArtworkCreation.totalSupply();
+    Mixell mixellArtworkMixell = Mixell(nftAddress);
+    uint256 MixellSupply = mixellArtworkMixell.totalSupply();
 /**
     uint256 numItemsAllocated = 0;
-    if (_optionId == SINGLE_CREATION_OPTION) {
+    if (_optionId == SINGLE_MIXELL_OPTION) {
       numItemsAllocated = 1;
-    } else if (_optionId == MULTIPLE_CREATION_OPTION) {
-      numItemsAllocated = NUM_CREATIONS_IN_MULTIPLE_CREATION_OPTION;
+    } else if (_optionId == MULTIPLE_MIXELL_OPTION) {
+      numItemsAllocated = NUM_MIXELLS_IN_MULTIPLE_MIXELL_OPTION;
     } 
-    return CreationSupply < (Creation_SUPPLY - numItemsAllocated);
+    return MixellSupply < (Mixell_SUPPLY - numItemsAllocated);
      */
      return true;
   }
